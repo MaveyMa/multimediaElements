@@ -1,5 +1,9 @@
-#SKELETON OF THE ALGORITHM
 """
+Augmented Reality Elemental Cards: https://github.com/MaveyMa/multimediaElements
+[TEAM 87] Noe Lomeli | Mavey Ma | Mario Martinez | May 13, 2016
+[Josh Kling, TA][Spring 2016][Professor Avner Biblarz]
+[Final Project] CST 205: Multimedia Design and Programming
+
 Water + Earth == Mud, Clay (1
 Water + Fire == Opposites (2
 Water + Air == Ice, Frost (3
@@ -10,13 +14,11 @@ Fire + Air == Lightning, Electricity (6
 #DISPLAY IMAGE, RESIZE IMAGE
 import PIL
 from PIL import Image 
-#========================================
+#================================================================
 #SUMMARY: Combines two elements.
-#PRE-CONDITION: Pass in two strings
-#               (Water, Earth, Fire, Air)
-#POST-CONDITION: Print out the result of
-#                mixing the two elements.
-#========================================
+#PRE-CONDITION: Pass in two strings (Water, Earth, Fire, Air)
+#POST-CONDITION: Print out the result of mixing the two elements.
+#================================================================
 def combine(firstElement, secondElement):
     #Water + Earth == Mud, Clay
     if ((firstElement == "Water" and secondElement == "Earth") or 
@@ -53,14 +55,24 @@ def combine(firstElement, secondElement):
         print "Error! Code shouldn't reach here."
         displayImage(resizePhoto(500, "lion.jpg"))
     return
-#========================================
+#================================================================
+#SUMMARY: Display photo in new window.
+#PRE-CONDITION: Pass in fileName string.
+#POST-CONDITION: Returns True.
+#================================================================
 def displayImage(fileName):
     #OPEN THE PICTURE, STORE IN photo
     photo = Image.open(fileName)
     #OPENS IMAGE APP AND DISPLAYS PHOTO
     photo.show()
-    return True;
-
+    return True
+#================================================================
+#
+#================================================================
+#SUMMARY: Resize photo proportionately.
+#PRE-CONDITION: Pass in baseWidth number and fileName string.
+#POST-CONDITION: Returns newFileName string of resized photo.
+#================================================================
 def resizePhoto(baseWidth, fileName):
     photo = Image.open(fileName)
     wPercent = ( baseWidth / float(photo.size[0]) )
@@ -69,29 +81,14 @@ def resizePhoto(baseWidth, fileName):
     newfileName = "resized_" + fileName
     photo.save(newfileName)
     return newfileName
-
-"""
-lion = Image.open("lion.jpg")
-wPercent = ( baseWidth / float(lion.size[0]) )
-hSize = int( (float(lion.size[1]) * float(wPercent)) )
-lion = lion.resize( (baseWidth, hSize), PIL.Image.ANTIALIAS)
-lion.save("resizedLion.jpg")
-displayImage("resizedLion.jpg")
-displayImage(resizePhoto(500, "lion.jpg"))
-"""
-
-
-
-
-
+#================================================================
 
 #combine("Water", "Earth")
-#combine("Water", "Fire")
+combine("Water", "Fire")
 #combine("Water", "Air")
 #combine("Earth", "Fire")
 #combine("Earth", "Air")
-combine("Fire", "Air")
-
+#combine("Fire", "Air")
 
 """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
