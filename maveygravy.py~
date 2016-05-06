@@ -83,12 +83,8 @@ def resizePhoto(baseWidth, fileName):
     return newfileName
 #================================================================
 
-combine("Water", "Earth")
-#combine("Water", "Fire")
-#combine("Water", "Air")
-#combine("Earth", "Fire")
-#combine("Earth", "Air")
-#combine("Fire", "Air")
+combine("Earth", "Fire")
+
 
 """
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,12 +92,12 @@ combine("Water", "Earth")
 awesome = "Earth"
 thing = "Water"
 combine(awesome, thing)
-combine("Water", "Earth")
-combine("Water", "Fire")
-combine("Water", "Air")
-combine("Earth", "Fire")
-combine("Earth", "Air")
-combine("Fire", "Air")
+#combine("Water", "Earth")
+#combine("Water", "Fire")
+#combine("Water", "Air")
+#combine("Earth", "Fire")
+#combine("Earth", "Air")
+#combine("Fire", "Air")
 #THESE ARE TESTS; COMBINE FUNCTION WORKS. YOU CAN DELETE LATER.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
