@@ -97,10 +97,12 @@ uploadButton.pack(side=LEFT)
 resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      fg="white", bg="firebrick4",
                      activeforeground="white", activebackground="firebrick1",
-                     command=lambda: maveygravy.combine(some,thing), width = 16)
+                     command=quit, width = 16)
 resetButton.pack(side=RIGHT)
 #==========PROCESS INPUT HERE==========
-
+#some = "Earth"
+#thing = "Fire"
+#command=lambda: maveygravy.combine(some,thing)
 #END PROGRAM, RUN IT
 mainloop()
 
