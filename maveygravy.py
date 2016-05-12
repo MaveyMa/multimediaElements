@@ -83,7 +83,11 @@ def resizePhoto(baseWidth, fileName):
     return newfileName
 #================================================================
 
+<<<<<<< HEAD
 combine("Earth", "Fire")
+=======
+#combine("Earth", "Fire")
+>>>>>>> 8b670096b97f22e5c8f668bd21404f208617c1c8
 
 
 """
