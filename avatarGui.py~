@@ -22,6 +22,8 @@ import maveygravy
 #POST-CONDITION: Click 'q' to quit
 #================================================================
 def showFrame():
+    import colorDetection
+'''
     cap = cv2.VideoCapture(0)
     while(True):
         # Capture frame-by-frame
@@ -35,6 +37,7 @@ def showFrame():
     # When everything done, release the capture
     cap.release()
     cv2.destroyAllWindows()
+'''
 #==========STYLE SET UP==========
 #BOX
 master = Tk()
@@ -97,17 +100,11 @@ uploadButton.pack(side=LEFT)
 resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      fg="white", bg="firebrick4",
                      activeforeground="white", activebackground="firebrick1",
-                     command=quit, width = 16)
+                     command=lambda: maveygravy.combine(some,thing), width = 16)
 resetButton.pack(side=RIGHT)
 #==========PROCESS INPUT HERE==========
-<<<<<<< HEAD
-#some = "Earth"
-#thing = "Fire"
-#command=lambda: maveygravy.combine(some,thing)
-=======
 some = "Earth"
 thing = "Fire"
->>>>>>> 22e74fe7e64700aaf078f9586e7dd5c7b1dbb557
 #END PROGRAM, RUN IT
 mainloop()
 
