@@ -1,4 +1,5 @@
-import cv2.cv as cv
+
+import cv2 as cv
 
 def getThresholdImage(im):
     newim = cv.CloneImage(im)
@@ -53,7 +54,11 @@ while True:
     cv.ShowImage("video", frame)
     cv.ShowImage("thresh", imgYellowTresh)
     c=cv.WaitKey(1)
-    if c==27 or c==1048603: #Break if user enters 'Esc'.
+    if cv2.waitKey(50) & 0xFF == ord('q'):
         break
     elif c== 1048690: # 'r' for reset
         cv.Zero(imgScribble)
+
+
+capture.release()
+cv2.destroyAllWindows()
