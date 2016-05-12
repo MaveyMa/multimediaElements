@@ -100,9 +100,14 @@ resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      command=quit, width = 16)
 resetButton.pack(side=RIGHT)
 #==========PROCESS INPUT HERE==========
+<<<<<<< HEAD
 #some = "Earth"
 #thing = "Fire"
 #command=lambda: maveygravy.combine(some,thing)
+=======
+some = "Earth"
+thing = "Fire"
+>>>>>>> 22e74fe7e64700aaf078f9586e7dd5c7b1dbb557
 #END PROGRAM, RUN IT
 mainloop()
 
