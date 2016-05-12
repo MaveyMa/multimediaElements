@@ -12,6 +12,8 @@ Earth + Air == Opposites (5
 Fire + Air == Lightning, Electricity (6
 """
 #DISPLAY IMAGE, RESIZE IMAGE
+import cv2.cv as cv
+import cv2
 import PIL
 from PIL import Image
 #================================================================
@@ -24,7 +26,9 @@ def combine(firstElement, secondElement):
     if ((firstElement == "Water" and secondElement == "Earth") or
         (firstElement == "Earth" and secondElement == "Water")):
         print "Water + Earth == Mud, Clay!"
-        displayImage(resizePhoto(500, "mud.jpg"))
+        imgFile1 = displayImage(resizePhoto(500, "mud.jpg"))
+        imgFile = cv2.imread('resized_lava.jpg') #500 x 281
+        size = (500, 281)
     #Water + Fire == Opposites
     elif ((firstElement == "Water" and secondElement == "Fire") or
              (firstElement == "Fire" and secondElement == "Water")):

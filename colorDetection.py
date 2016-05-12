@@ -184,14 +184,14 @@ while True:
         element2 = ""
 
     if rlastx > 0 and rlasty > 0 and rposx > 0 and rposy > 0: #Mean we have received coordinates to print
-    #if there is a yellow object present
+    #if there is a red object present
         #cv2.imshow('dst_rt', imgFile)
         element2 = "Fire"
     else:
         element2 = ""
 
     if glastx > 0 and glasty > 0 and gposx > 0 and gposy > 0: #Mean we have received coordinates to print
-    #if there is a yellow object present
+    #if there is a green object present
         #cv2.imshow('dst_rt', imgFile)
         element2 = "Earth"
     else:
