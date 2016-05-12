@@ -22,6 +22,7 @@ import maveygravy
 #POST-CONDITION: Click 'q' to quit
 #================================================================
 def showFrame():
+    import color
     cap = cv2.VideoCapture(0)
     while(True):
         # Capture frame-by-frame
