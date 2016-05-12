@@ -1,19 +1,11 @@
 
-<<<<<<< HEAD
-from displayImages import combine
-=======
->>>>>>> master
+
 import cv2.cv as cv
 import cv2
 def getThresholdImage(im):
     newim = cv.CloneImage(im)
     cv.Smooth(newim, newim, cv.CV_BLUR,12) #Remove noise
 
-<<<<<<< HEAD
-    imgFile = cv2.imread('vive.jpg')
-=======
-    imgFile = cv2.imread('resized_lava.jpg')
->>>>>>> master
 
     hsv=cv.CreateImage(cv.GetSize(im), 8, 3)
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
@@ -77,7 +69,7 @@ imgScribble = cv.CreateImage(cv.GetSize(tmp), 8, 3) #Image that will contain lin
 #yellow
 posx = 0
 posy = 0
-<<<<<<< HEAD
+
 #blue
 bposx = 0
 bposy = 0
@@ -87,10 +79,7 @@ rposy = 0
 #green
 gposx = 0
 gposy = 0
-=======
-imgFile = cv2.imread('resized_lava.jpg') #500 x 281
-size = (500, 281)
->>>>>>> master
+
 
 imgFile = cv2.imread('vive.jpg') #500 x 281
 size = (500, 281)
@@ -170,7 +159,16 @@ while True:
 
 
     if lastx > 0 and lasty > 0 and posx > 0 and posy > 0: #Mean we have received coordinates to print
-<<<<<<< HEAD
+        #Draw the line
+
+        #When a yellow object is in the frame this image will appear
+        cv2.imshow('dst_rt', imgFile)
+        x_offset=y_offset=50
+        #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
+        #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
+    else:
+        cv.DestroyWindow('dst_rt')
+
     #if there is a yellow object present
         #cv2.imshow('dst_rt', imgFile)
         element1 = "Air"
@@ -205,17 +203,7 @@ while True:
 
         #image will disappear if the color object is not present
         #cv.DestroyWindow('dst_rt')
-=======
-        #Draw the line
 
-        #When a yellow object is in the frame this image will appear
-        cv2.imshow('dst_rt', imgFile)
-        x_offset=y_offset=50
-        #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
-        #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
-    else:
-        cv.DestroyWindow('dst_rt')
->>>>>>> master
     #Add the frame and the line image to see lines on the webcam frame
     cv.Add(frame, imgScribble, frame)
 
