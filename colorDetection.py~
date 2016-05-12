@@ -47,34 +47,41 @@ while True:
     bmoment01 = cv.GetSpatialMoment(bmoments, 0, 1)
     barea = cv.GetCentralMoment(bmoments, 0, 0) #Get the center
 
-    lastx = posx
+    lastx = posx #yellow
     lasty = posy
-    blastx = bposx
+    blastx = bposx #blue
     blasty = bposy
-    if area == 0:
+    if area == 0: #yellow
         posx = 0
         posy = 0
     else:
         posx = moment10/area
         posy = moment01/area
-    if barea == 0:
+    if barea == 0: #blue
         bposx = 0
         bposy = 0
 
     else:
         bposx = bmoment10/barea
         bposy = bmoment01/barea
-    if lastx > 0 and lasty > 0 and posx > 0 and posy > 0 and blastx > 0 and blasty > 0 and bposx > 0 and bposy > 0: #Means we have received coordinates to print
+    #IF CAMERA SEES YELLOW, IT'S AIR. DISPLAY AIR.
+    if lastx > 0 and lasty > 0 and posx > 0 and posy > 0: #Means we have received coordinates to print
         #Draw the line
 
         #When a yellow object is in the frame this image will appear
         cv2.imshow('dst_rt', imgFile)
-        element = "AIR"
+        element = "Air"
         print element
         #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
         #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
+    #IF CAMERA SEES BLUE, IT'S WATER. DISPLAY BLUE.
+    elif blastx > 0 and blasty > 0 and bposx > 0 and bposy > 0:
+        element = "Water"
+        print element
+    #TODO:IF CAMERA SEES RED, IT'S FIRE. DISPLAY FIRE.
+    #RIGHT NOW THIS IS AN ELSE STATEMENT. BUT TODO: IF CAMERA SEES GREEN, IT'S EARTH. DISPLAY EARTH.
     else:
-        element = "EARTH"
+        element = "Earth"
         print element
         #image will disappear if the color object is not present
         cv.DestroyWindow('dst_rt')
