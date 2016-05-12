@@ -42,7 +42,7 @@ def showFrame():
 #BOX
 master = Tk()
 #CREATE A CANVAS w SIZE 800x500
-w = Canvas(master, width=610, height=490)
+w = Canvas(master, width=690, height=490)
 #CONTROL WHERE THINGS ARE LOCATED: EXPAND, FILL, SIDES
 w.pack()
 #SET FONT
@@ -89,22 +89,32 @@ BUTTON(LOCATION, TEXT, FONT,
        FOREGROUND(COLOR OF TEXT), BACKGROUND,
        HOVERTEXT, HOVERGROUND)
 """
-#BUTTON UPLOAD: ALLOWS USER TO SELECT A FILE TO UPLOAD
-uploadButton = Button(leftFrame, text="OPEN CAM", font=courierButton, 
+
+#BUTTON BEND ELEMENTS: DISPLAY 3D OJECT ON CARDS (MARIO'S CODE)
+bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton, 
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
-                      command=showFrame, width = 16)
-uploadButton.pack(side=LEFT)
+                      command=quit, width = 12)
+bendElementsButton.pack(side=LEFT)
+
+#BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
+combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton, 
+                      fg="white", bg="DeepSkyBlue2",
+                      activeforeground="white", activebackground="turquoise2",
+                      command=showFrame, width = 12)
+combineButton.pack(side=LEFT)
+
 
 #BUTTON EXIT: CLOSES WINDOW
 resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      fg="white", bg="firebrick4",
                      activeforeground="white", activebackground="firebrick1",
-                     command=lambda: maveygravy.combine(some,thing), width = 16)
+                     command=quit, width = 12)
 resetButton.pack(side=RIGHT)
 #==========PROCESS INPUT HERE==========
-some = "Earth"
-thing = "Fire"
+#some = "Earth"
+#thing = "Fire"
+#command=lambda: maveygravy.combine(some,thing)
 #END PROGRAM, RUN IT
 mainloop()
 
