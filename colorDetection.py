@@ -76,6 +76,9 @@ bposy = 0
 #red
 rposx = 0
 rposy = 0
+#green
+gposx = 0
+gposy = 0
 
 imgFile = cv2.imread('vive.jpg') #500 x 281
 size = (500, 281)
@@ -103,6 +106,11 @@ while True:
     rmoment01 = cv.GetSpatialMoment(rmoments, 0, 1)
     rarea = cv.GetCentralMoment(rmoments, 0, 0) #Get the center
 
+    gmoments = cv.Moments(cv.GetMat(imgGreenTresh),1)
+    gmoment10 = cv.GetSpatialMoment(gmoments, 1, 0)
+    gmoment01 = cv.GetSpatialMoment(gmoments, 0, 1)
+    garea = cv.GetCentralMoment(gmoments, 0, 0) #Get the center
+
     lastx = posx
     lasty = posy
 
@@ -111,6 +119,9 @@ while True:
 
     rlastx = rposx
     rlasty = rposy
+
+    glastx = gposx
+    glasty = gposy
 
 
     if area == 0: #yellow
@@ -136,6 +147,14 @@ while True:
         rposx = rmoment10/rarea
         rposy = rmoment01/rarea
 
+    #green
+    if garea == 0:
+        gposx = 0
+        gposy = 0
+    else:
+        gposx = gmoment10/garea
+        gposy = gmoment01/garea
+
 
     if lastx > 0 and lasty > 0 and posx > 0 and posy > 0: #Mean we have received coordinates to print
     #if there is a yellow object present
@@ -149,6 +168,21 @@ while True:
         element2 = "Water"
     else:
         element2 = ""
+
+    if rlastx > 0 and rlasty > 0 and rposx > 0 and rposy > 0: #Mean we have received coordinates to print
+    #if there is a yellow object present
+        #cv2.imshow('dst_rt', imgFile)
+        element2 = "Fire"
+    else:
+        element2 = ""
+
+    if glastx > 0 and glasty > 0 and gposx > 0 and gposy > 0: #Mean we have received coordinates to print
+    #if there is a yellow object present
+        #cv2.imshow('dst_rt', imgFile)
+        element2 = "Earth"
+    else:
+        element2 = ""
+
 
     combine(element1, element2)
     print element1
