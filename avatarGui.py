@@ -22,7 +22,8 @@ import maveygravy
 #POST-CONDITION: Click 'q' to quit
 #================================================================
 def showFrame():
-    import color
+    import colorDetection
+'''
     cap = cv2.VideoCapture(0)
     while(True):
         # Capture frame-by-frame
@@ -36,6 +37,7 @@ def showFrame():
     # When everything done, release the capture
     cap.release()
     cv2.destroyAllWindows()
+'''
 #==========STYLE SET UP==========
 #BOX
 master = Tk()
