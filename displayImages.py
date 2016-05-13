@@ -28,11 +28,11 @@ def combine(firstElement, secondElement):
 
         imgFile1 = resizePhoto(500, 'mud.jpg')
 
-        #imgFile = cv2.imread(imgFile1) #500 x 281
+        imgFile = cv2.imread(imgFile1) #500 x 281
 
-        #cv2.imshow('dst_rt', imgFile)
+        cv2.imshow('dst_rt', imgFile)
 
-        displayImage(imgFile1)
+        #displayImage(imgFile1)
         print "Water + Earth == Mud, Clay!"
 
     #Water + Fire == Opposites
