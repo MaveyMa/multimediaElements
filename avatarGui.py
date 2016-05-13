@@ -38,6 +38,54 @@ def combineColorsAvatarState():
     cap.release()
     cv2.destroyAllWindows()
 '''
+
+def bendElementsButton():
+    import glut.py
+    INVERSE_MATRIX = np.array([[ 1.0, 1.0, 1.0, 1.0],
+                                [-1.0,-1.0,-1.0,-1.0],
+                                [-1.0,-1.0,-1.0,-1.0],
+                                [ 1.0, 1.0, 1.0, 1.0]])
+
+
+    SHAPE_CONE = "cone"
+    SHAPE_SPHERE = "sphere"
+
+    width = 640
+    height = 480
+
+    glutInit(sys.argv)
+
+
+    # Create a double-buffer RGBA window.   (Single-buffering is possible.
+    # So is creating an index-mode window.)
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | OPENGL | DOUBLEBUF)
+
+    glutInitWindowSize(width, height)
+    glutInitWindowPosition(800, 400)
+
+    # Create a window, setting its title
+    window_id = glutCreateWindow("OpenGL Glyphs")
+
+    # assign texture
+    #glEnable(GL_TEXTURE_2D)
+
+     
+    # assign shapes
+    cone = OBJ('redColor.obj')
+    sphere = OBJ('mk.obj')
+
+    # Run the GLUT main loop until the user closes the window.
+    #glutMainLoop()
+    global cap
+    cap = cv2.VideoCapture(0)
+    texture_background = glGenTextures(1)
+    glutDisplayFunc(display)
+    glutIdleFunc(display)
+    _init_gl(width, height)
+    glutMainLoop()
+
+    cap.release()
+    cv2.destroyAllWindows()
 #==========STYLE SET UP==========
 #BOX
 master = Tk()
@@ -93,7 +141,7 @@ BUTTON(LOCATION, TEXT, FONT,
 bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton, 
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
-                      command=quit, width = 12)
+                      command=bendElementsButton, width = 12)
 bendElementsButton.pack(side=LEFT)
 #BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
 combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton, 
