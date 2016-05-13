@@ -245,13 +245,11 @@ def _init_gl(Width, Height):
 
 #=============================================================================
 def get_frame():
+    #Grabing the camera footage and converting it to RGBA
     ret, frame = cap.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (5,5), 0)
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-    edges = cv2.Canny(gray, 100, 200)
 
-    cv2.imshow('frame',frame)
+    #cv2.imshow('frame',frame)
 
 
 
@@ -291,7 +289,7 @@ window_id = glutCreateWindow("OpenGL Glyphs")
 glEnable(GL_TEXTURE_2D)
 
 
-# assign shapes
+# assign shapes and load in the 3d objects
 cone = OBJ('plainRain.obj')
 sphere = OBJ('exportedRock.obj')
 smile = OBJ('test2.obj')
