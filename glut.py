@@ -1,6 +1,6 @@
 '''
 Credit to https://rdmilligan.wordpress.com for helping us create and understand AR in python.
-Also for the web calibration packet
+Also for the web calibration package
 '''
 
 
@@ -138,28 +138,18 @@ def position_glyphs(frame):
         glPushMatrix()
         glLoadMatrixd(view_matrix)
 
-        '''
+        
         glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 50, -50, 0.0))
         glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 1.0, 1.0))
         glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 1.0, 2.0, 1.0))
-        '''
+        
 
-        glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 25, -50, 0.0))
-        glLightfv(GL_LIGHT0, GL_AMBIENT, (0.64, 0.004428, 0.0, 1.0))
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 1.0))
-        #glColor3d(0.0,1.0,0.0)
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
         if glyph_name == SHAPE_CONE:
-            glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 25, -50, 0.0))
-            glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 0.0, 1.0))
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 1.0))
             glCallList(cone.gl_list)
             
         elif glyph_name == SHAPE_SPHERE:
-            glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 25, -50, 0.0))
-            glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 0.0, 1.0))
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 0.5, 0.5, 1.0))
             glCallList(sphere.gl_list)
 
         glDisable(GL_LIGHT0)
@@ -232,9 +222,6 @@ def _init_gl(Width, Height):
     gluPerspective(33.7, 1.3, 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
      
-    # assign shapes
-    #cone = OBJ('colorCube.obj')
-
 
     # assign texture
     glEnable(GL_TEXTURE_2D)
@@ -257,4 +244,49 @@ def get_frame():
 
 #=============================================================================
 
+INVERSE_MATRIX = np.array([[ 1.0, 1.0, 1.0, 1.0],
+                            [-1.0,-1.0,-1.0,-1.0],
+                            [-1.0,-1.0,-1.0,-1.0],
+                            [ 1.0, 1.0, 1.0, 1.0]])
 
+
+SHAPE_CONE = "cone"
+SHAPE_SPHERE = "sphere"
+
+
+width = 640
+height = 480
+
+glutInit(sys.argv)
+
+
+# Create a double-buffer RGBA window.   (Single-buffering is possible.
+# So is creating an index-mode window.)
+glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | OPENGL | DOUBLEBUF)
+
+glutInitWindowSize(width, height)
+glutInitWindowPosition(800, 400)
+
+# Create a window, setting its title
+window_id = glutCreateWindow("OpenGL Glyphs")
+
+# assign texture
+#glEnable(GL_TEXTURE_2D)
+
+ 
+# assign shapes
+cone = OBJ('plainRain.obj')
+sphere = OBJ('exportedRock.obj')
+
+# Run the GLUT main loop until the user closes the window.
+#glutMainLoop()
+global cap
+cap = cv2.VideoCapture(0)
+texture_background = glGenTextures(1)
+glutDisplayFunc(display)
+glutIdleFunc(display)
+_init_gl(width, height)
+glutMainLoop()
+
+cap.release()
+cv2.destroyAllWindows()
