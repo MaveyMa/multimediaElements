@@ -21,7 +21,7 @@ import maveygravy
 #PRE-CONDITION: Click the OPEN CAM button
 #POST-CONDITION: Click 'q' to quit
 #================================================================
-def showFrame():
+def combineColorsAvatarState():
     import colorDetection
 '''
     cap = cv2.VideoCapture(0)
@@ -42,7 +42,7 @@ def showFrame():
 #BOX
 master = Tk()
 #CREATE A CANVAS w SIZE 800x500
-w = Canvas(master, width=610, height=490)
+w = Canvas(master, width=690, height=490)
 #CONTROL WHERE THINGS ARE LOCATED: EXPAND, FILL, SIDES
 w.pack()
 #SET FONT
@@ -50,20 +50,20 @@ courierButton = tkFont.Font(family="Courier", size=21, weight=tkFont.BOLD)
 courierWelcome = tkFont.Font(family="Courier", size=21, weight=tkFont.BOLD)
 courierText = tkFont.Font(family="Courier", size=45, weight=tkFont.BOLD)
 #WINDOW TITLE
-master.title("Elemental Color Chemistry [Augment Reality Cards]")
-#WELCOME TEXT
-welcomeLine1 = Label(master, text = "Choose your 2 elements, OPEN CAM,",   
+master.title("Color Detection | Motion Tracking | Augment Reality")
+#WELCOME TEXT AND COLOR LEGEND
+welcomeLine1 = Label(master, text = "Choose  2 elements, [BEND ELEMENTS],",   
                      font=courierWelcome, background='RoyalBlue4', fg='white')
-welcomeLine2 = Label(master, text = "and yield the force of nature...",   
+welcomeLine2 = Label(master, text = "and yield the [AVATAR STATE]...",   
                      font=courierWelcome, background='RoyalBlue4', fg='white')
 waterSubtitle = Label(master, text = " Water == Blue ", font=courierText,
-                background='gray11', fg='blue')
+                      background='gray11', fg='blue')
 earthSubtitle = Label(master, text = " Earth == Green ", font=courierText,
-                background='gray11', fg='green')
+                      background='gray11', fg='green')
 fireSubtitle= Label(master, text = " Fire == Red ", font=courierText,
-                background='gray11', fg='red')
+                    background='gray11', fg='red')
 airSubtitle = Label(master, text = " Air == Yellow ", font=courierText,
-                background='gray11', fg='yellow')
+                    background='gray11', fg='yellow')
 #COORDINATES FOR WHERE TO PLACE THESE TEXT WITHIN THE BOX
 welcomeLine1.place(x=15,y=5)
 welcomeLine2.place(x=15,y=36)
@@ -89,22 +89,29 @@ BUTTON(LOCATION, TEXT, FONT,
        FOREGROUND(COLOR OF TEXT), BACKGROUND,
        HOVERTEXT, HOVERGROUND)
 """
-#BUTTON UPLOAD: ALLOWS USER TO SELECT A FILE TO UPLOAD
-uploadButton = Button(leftFrame, text="OPEN CAM", font=courierButton, 
+#BUTTON BEND ELEMENTS: DISPLAY 3D OJECT ON CARDS (MARIO'S CODE)
+bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton, 
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
-                      command=showFrame, width = 16)
-uploadButton.pack(side=LEFT)
-
+                      command=quit, width = 12)
+bendElementsButton.pack(side=LEFT)
+#BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
+combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton, 
+                      fg="white", bg="DeepSkyBlue2",
+                      activeforeground="white", activebackground="turquoise2",
+                      command=combineColorsAvatarState, width = 12)
+combineButton.pack(side=LEFT)
 #BUTTON EXIT: CLOSES WINDOW
 resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      fg="white", bg="firebrick4",
                      activeforeground="white", activebackground="firebrick1",
-                     command=lambda: maveygravy.combine(some,thing), width = 16)
+                     command=quit, width = 12)
 resetButton.pack(side=RIGHT)
+
 #==========PROCESS INPUT HERE==========
-some = "Earth"
-thing = "Fire"
+#some = "Earth"
+#thing = "Fire"
+#command=lambda: maveygravy.combine(some,thing)
 #END PROGRAM, RUN IT
 mainloop()
 
