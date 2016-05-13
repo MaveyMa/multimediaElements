@@ -1,5 +1,5 @@
 
-
+from displayImages import *
 import cv2.cv as cv
 import cv2
 def getThresholdImage(im):
@@ -11,7 +11,7 @@ def getThresholdImage(im):
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the yellow color
-    cv.InRangeS(hsv, cv.Scalar(20, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(30, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
     del hsv
     return imThreshed
 
@@ -19,13 +19,13 @@ def getThresholdGreenImage(im):
     newim = cv.CloneImage(im)
     cv.Smooth(newim, newim, cv.CV_BLUR,12) #Remove noise
 
-    imgFile = cv2.imread('vive.jpg')
+    #imgFile = cv2.imread('vive.jpg')
 
     hsv=cv.CreateImage(cv.GetSize(im), 8, 3)
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the green color
-    cv.InRangeS(hsv, cv.Scalar(60, 100, 100), cv.Scalar(125, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(60, 100, 100), cv.Scalar(100, 200, 200), imThreshed)
     del hsv
     return imThreshed
 
@@ -33,13 +33,13 @@ def getThresholdBlueImage(im):
     newim = cv.CloneImage(im)
     cv.Smooth(newim, newim, cv.CV_BLUR,12) #Remove noise
 
-    imgFile = cv2.imread('vive.jpg')
+    #imgFile = cv2.imread('vive.jpg')
 
     hsv=cv.CreateImage(cv.GetSize(im), 8, 3)
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the blue color
-    cv.InRangeS(hsv, cv.Scalar(120, 100, 100), cv.Scalar(125, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(120, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
     del hsv
 
     return imThreshed
@@ -48,13 +48,13 @@ def getThresholdRedImage(im):
     newim = cv.CloneImage(im)
     cv.Smooth(newim, newim, cv.CV_BLUR,12) #Remove noise
 
-    imgFile = cv2.imread('vive.jpg')
+    #imgFile = cv2.imread('vive.jpg')
 
     hsv=cv.CreateImage(cv.GetSize(im), 8, 3)
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the red color
-    cv.InRangeS(hsv, cv.Scalar(0, 100, 100), cv.Scalar(0, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(0, 100, 100), cv.Scalar(120, 200, 200), imThreshed)
     del hsv
     return imThreshed
 
@@ -162,11 +162,13 @@ while True:
         #Draw the line
 
         #When a yellow object is in the frame this image will appear
-        cv2.imshow('dst_rt', imgFile)
-        x_offset=y_offset=50
+        #cv2.imshow('dst_rt', imgFile)
+        #x_offset=y_offset=50
         #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
         #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
-        cv.DestroyWindow('dst_rt')
+
+    #else:
+        #cv.DestroyWindow('dst_rt')
 
     #if there is a yellow object present
         #cv2.imshow('dst_rt', imgFile)
@@ -210,7 +212,11 @@ while True:
     #cv.ShowImage("thresh", imgYellowTresh)
 
     c=cv.WaitKey(1)
-    if c==27 or c==1048603: #Break if user enters 'Esc'.
+    if cv2.waitKey(50) & 0xFF == ord('q'):
         break
     elif c== 1048690: # 'r' for reset
         cv.Zero(imgScribble)
+
+
+capture.release()
+cv2.destroyAllWindows()
