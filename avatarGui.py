@@ -2,7 +2,7 @@
 NAME: Mavey Ma
 LAST EDITED: May 7, 2016
 DESCRIPTION: Graphical User Interface for Element with three buttons:
-[TURN ON COLOR-DETECTION] 
+[TURN ON COLOR-DETECTION]
 [TURN ON CAMERA] - Webcam turns on.
 [EXIT] - Closes window
 '''
@@ -52,9 +52,9 @@ courierText = tkFont.Font(family="Courier", size=45, weight=tkFont.BOLD)
 #WINDOW TITLE
 master.title("Color Detection | Motion Tracking | Augment Reality")
 #WELCOME TEXT AND COLOR LEGEND
-welcomeLine1 = Label(master, text = "Choose  2 elements, [BEND ELEMENTS],",   
+welcomeLine1 = Label(master, text = "Choose  2 elements, [BEND ELEMENTS],",
                      font=courierWelcome, background='RoyalBlue4', fg='white')
-welcomeLine2 = Label(master, text = "and yield the [AVATAR STATE]...",   
+welcomeLine2 = Label(master, text = "and yield the [AVATAR STATE]...",
                      font=courierWelcome, background='RoyalBlue4', fg='white')
 waterSubtitle = Label(master, text = " Water == Blue ", font=courierText,
                       background='gray11', fg='blue')
@@ -90,13 +90,13 @@ BUTTON(LOCATION, TEXT, FONT,
        HOVERTEXT, HOVERGROUND)
 """
 #BUTTON BEND ELEMENTS: DISPLAY 3D OJECT ON CARDS (MARIO'S CODE)
-bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton, 
+bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton,
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
                       command=quit, width = 12)
 bendElementsButton.pack(side=LEFT)
 #BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
-combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton, 
+combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton,
                       fg="white", bg="DeepSkyBlue2",
                       activeforeground="white", activebackground="turquoise2",
                       command=combineColorsAvatarState, width = 12)
