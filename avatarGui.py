@@ -1,8 +1,9 @@
+
 '''
 NAME: Mavey Ma
 LAST EDITED: May 7, 2016
 DESCRIPTION: Graphical User Interface for Element with three buttons:
-[TURN ON COLOR-DETECTION] 
+[TURN ON COLOR-DETECTION]
 [TURN ON CAMERA] - Webcam turns on.
 [EXIT] - Closes window
 '''
@@ -21,7 +22,7 @@ import maveygravy
 #PRE-CONDITION: Click the OPEN CAM button
 #POST-CONDITION: Click 'q' to quit
 #================================================================
-def showFrame():
+def combineColorsAvatarState():
     import colorDetection
 '''
     cap = cv2.VideoCapture(0)
@@ -38,11 +39,59 @@ def showFrame():
     cap.release()
     cv2.destroyAllWindows()
 '''
+
+def bendElementsButton():
+    import glut.py
+    INVERSE_MATRIX = np.array([[ 1.0, 1.0, 1.0, 1.0],
+                                [-1.0,-1.0,-1.0,-1.0],
+                                [-1.0,-1.0,-1.0,-1.0],
+                                [ 1.0, 1.0, 1.0, 1.0]])
+
+
+    SHAPE_CONE = "cone"
+    SHAPE_SPHERE = "sphere"
+
+    width = 640
+    height = 480
+
+    glutInit(sys.argv)
+
+
+    # Create a double-buffer RGBA window.   (Single-buffering is possible.
+    # So is creating an index-mode window.)
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | OPENGL | DOUBLEBUF)
+
+    glutInitWindowSize(width, height)
+    glutInitWindowPosition(800, 400)
+
+    # Create a window, setting its title
+    window_id = glutCreateWindow("OpenGL Glyphs")
+
+    # assign texture
+    #glEnable(GL_TEXTURE_2D)
+
+
+    # assign shapes
+    cone = OBJ('redColor.obj')
+    sphere = OBJ('mk.obj')
+
+    # Run the GLUT main loop until the user closes the window.
+    #glutMainLoop()
+    global cap
+    cap = cv2.VideoCapture(0)
+    texture_background = glGenTextures(1)
+    glutDisplayFunc(display)
+    glutIdleFunc(display)
+    _init_gl(width, height)
+    glutMainLoop()
+
+    cap.release()
+    cv2.destroyAllWindows()
 #==========STYLE SET UP==========
 #BOX
 master = Tk()
 #CREATE A CANVAS w SIZE 800x500
-w = Canvas(master, width=610, height=490)
+w = Canvas(master, width=690, height=490)
 #CONTROL WHERE THINGS ARE LOCATED: EXPAND, FILL, SIDES
 w.pack()
 #SET FONT
@@ -50,20 +99,20 @@ courierButton = tkFont.Font(family="Courier", size=21, weight=tkFont.BOLD)
 courierWelcome = tkFont.Font(family="Courier", size=21, weight=tkFont.BOLD)
 courierText = tkFont.Font(family="Courier", size=45, weight=tkFont.BOLD)
 #WINDOW TITLE
-master.title("Elemental Color Chemistry [Augment Reality Cards]")
-#WELCOME TEXT
-welcomeLine1 = Label(master, text = "Choose your 2 elements, OPEN CAM,",   
+master.title("Color Detection | Motion Tracking | Augment Reality")
+#WELCOME TEXT AND COLOR LEGEND
+welcomeLine1 = Label(master, text = "Choose  2 elements, [BEND ELEMENTS],",
                      font=courierWelcome, background='RoyalBlue4', fg='white')
-welcomeLine2 = Label(master, text = "and yield the force of nature...",   
+welcomeLine2 = Label(master, text = "and yield the [AVATAR STATE]...",
                      font=courierWelcome, background='RoyalBlue4', fg='white')
 waterSubtitle = Label(master, text = " Water == Blue ", font=courierText,
-                background='gray11', fg='blue')
+                      background='gray11', fg='blue')
 earthSubtitle = Label(master, text = " Earth == Green ", font=courierText,
-                background='gray11', fg='green')
+                      background='gray11', fg='green')
 fireSubtitle= Label(master, text = " Fire == Red ", font=courierText,
-                background='gray11', fg='red')
+                    background='gray11', fg='red')
 airSubtitle = Label(master, text = " Air == Yellow ", font=courierText,
-                background='gray11', fg='yellow')
+                    background='gray11', fg='yellow')
 #COORDINATES FOR WHERE TO PLACE THESE TEXT WITHIN THE BOX
 welcomeLine1.place(x=15,y=5)
 welcomeLine2.place(x=15,y=36)
@@ -89,22 +138,29 @@ BUTTON(LOCATION, TEXT, FONT,
        FOREGROUND(COLOR OF TEXT), BACKGROUND,
        HOVERTEXT, HOVERGROUND)
 """
-#BUTTON UPLOAD: ALLOWS USER TO SELECT A FILE TO UPLOAD
-uploadButton = Button(leftFrame, text="OPEN CAM", font=courierButton, 
+#BUTTON BEND ELEMENTS: DISPLAY 3D OJECT ON CARDS (MARIO'S CODE)
+bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton,
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
-                      command=showFrame, width = 16)
-uploadButton.pack(side=LEFT)
-
+                      command=bendElementsButton, width = 12)
+bendElementsButton.pack(side=LEFT)
+#BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
+combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton,
+                      fg="white", bg="DeepSkyBlue2",
+                      activeforeground="white", activebackground="turquoise2",
+                      command=combineColorsAvatarState, width = 12)
+combineButton.pack(side=LEFT)
 #BUTTON EXIT: CLOSES WINDOW
 resetButton = Button(rightFrame, text="EXIT", font=courierButton,
                      fg="white", bg="firebrick4",
                      activeforeground="white", activebackground="firebrick1",
-                     command=lambda: maveygravy.combine(some,thing), width = 16)
+                     command=quit, width = 12)
 resetButton.pack(side=RIGHT)
+
 #==========PROCESS INPUT HERE==========
-some = "Earth"
-thing = "Fire"
+#some = "Earth"
+#thing = "Fire"
+#command=lambda: maveygravy.combine(some,thing)
 #END PROGRAM, RUN IT
 mainloop()
 

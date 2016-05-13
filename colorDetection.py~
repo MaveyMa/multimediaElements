@@ -11,7 +11,7 @@ def getThresholdImage(im):
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the yellow color
-    cv.InRangeS(hsv, cv.Scalar(23, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(30, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
     del hsv
     return imThreshed
 
@@ -25,7 +25,7 @@ def getThresholdGreenImage(im):
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the green color
-    cv.InRangeS(hsv, cv.Scalar(70, 100, 100), cv.Scalar(100, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(60, 100, 100), cv.Scalar(100, 200, 200), imThreshed)
     del hsv
     return imThreshed
 
@@ -39,8 +39,9 @@ def getThresholdBlueImage(im):
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the blue color
-    cv.InRangeS(hsv, cv.Scalar(120, 100, 100), cv.Scalar(125, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(120, 100, 100), cv.Scalar(30, 255, 255), imThreshed)
     del hsv
+
     return imThreshed
 
 def getThresholdRedImage(im):
@@ -53,7 +54,7 @@ def getThresholdRedImage(im):
     cv.CvtColor(newim, hsv, cv.CV_BGR2HSV) # Convert image to HSV
     imThreshed = cv.CreateImage(cv.GetSize(im), 8, 1)
     #Do the threshold on the hsv image, with the right range for the red color
-    cv.InRangeS(hsv, cv.Scalar(0, 100, 100), cv.Scalar(0, 200, 200), imThreshed)
+    cv.InRangeS(hsv, cv.Scalar(0, 100, 100), cv.Scalar(120, 200, 200), imThreshed)
     del hsv
     return imThreshed
 
@@ -84,10 +85,6 @@ imgFile = cv2.imread('vive.jpg') #500 x 281
 size = (500, 281)
 element1 = ""
 element2 = ""
-elementW = ""
-elementA = ""
-elementE = ""
-elementF = ""
 while True:
     frame = cv.QueryFrame(capture)
     imgBlueTresh = getThresholdBlueImage(frame)
@@ -161,60 +158,51 @@ while True:
         gposy = gmoment01/garea
 
 
-    if lastx > 0 and lasty > 0 and posx > 0 and posy > 0: #Mean we have received coordinates to print Draw the line
+    if lastx > 0 and lasty > 0 and posx > 0 and posy > 0: #Mean we have received coordinates to print
+        #Draw the line
 
         #When a yellow object is in the frame this image will appear
         #cv2.imshow('dst_rt', imgFile)
         #x_offset=y_offset=50
         #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
         #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
-
+<<<<<<< HEAD
+        cv.DestroyWindow('dst_rt')
+=======
     #else:
         #cv.DestroyWindow('dst_rt')
+>>>>>>> 695c289561447ae5b366b333014e7c19ecba52c2
 
     #if there is a yellow object present
         #cv2.imshow('dst_rt', imgFile)
-        elementA = "Air"
+        element1 = "Air"
     else:
-        elementA = ""
-
+        element1 = ""
     if blastx > 0 and blasty > 0 and bposx > 0 and bposy > 0: #Mean we have received coordinates to print
-        elementW = "Water"
-    else:
-        elementW = ""
-
-    if rlastx > 0 and rlasty > 0 and rposx > 0 and rposy > 0: #Mean we have received #coordinates to print if there is a red object present
+    #if there is a yellow object present
         #cv2.imshow('dst_rt', imgFile)
-        elementF = "Fire"
+        element2 = "Water"
     else:
-        elementF = ""
+        element2 = ""
 
-    if glastx > 0 and glasty > 0 and gposx > 0 and gposy > 0: #Mean we have received #coordinates to print if there is a green object present
+    if rlastx > 0 and rlasty > 0 and rposx > 0 and rposy > 0: #Mean we have received coordinates to print
+    #if there is a red object present
         #cv2.imshow('dst_rt', imgFile)
-        elementE = "Earth"
+        element2 = "Fire"
     else:
-        elementE = ""
+        element2 = ""
 
-    if(elementE == "Earth" and elementF == "Fire"):
-        combine(elementE, elementF)
-    elif(elementA == "Air" and elementW == "Water"):
-        combine(elementA, elementW)
-    elif(elementF == "Fire" and elementW == "Water"):
-        combine(elementF, elementW)
-    elif(elementW == "Water" and elementE == "Earth"):
-        combine(elementW, elementE)
-    elif(elementA == "Air" and elementE == "Earth"):
-        combine(elementA, elementE)
-    elif(elementA == "Air" and elementF == "Fire"):
-        combine(elementW, elementE)
+    if glastx > 0 and glasty > 0 and gposx > 0 and gposy > 0: #Mean we have received coordinates to print
+    #if there is a green object present
+        #cv2.imshow('dst_rt', imgFile)
+        element2 = "Earth"
+    else:
+        element2 = ""
 
-
-
-
-    #combine("Fire", "Air")
 
     combine(element1, element2)
-
+    print element1
+    print element2
 
 
         #image will disappear if the color object is not present
@@ -233,5 +221,5 @@ while True:
         cv.Zero(imgScribble)
 
 
-#capture.release()
-#cv2.destroyAllWindows()
+capture.release()
+cv2.destroyAllWindows()
