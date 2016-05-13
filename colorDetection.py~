@@ -166,6 +166,7 @@ while True:
         x_offset=y_offset=50
         #frame[y_offset:y_offset+size.shape[0], x_offset:x_offset+size.shape[1]] = size
         #cv.Line(imgScribble, (int(posx),int(posy)), (int(lastx),int(lasty)), cv.Scalar(0, 255,255),3,1)
+    else:
         cv.DestroyWindow('dst_rt')
 
     #if there is a yellow object present
