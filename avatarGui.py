@@ -142,7 +142,7 @@ BUTTON(LOCATION, TEXT, FONT,
 bendElementsButton = Button(leftFrame, text="BEND ELEMENTS", font=courierButton,
                       fg="white", bg="SpringGreen4",
                       activeforeground="white", activebackground="#00BA37",
-                      command=quit, width = 12)
+                      command=bendElementsButton, width = 12)
 bendElementsButton.pack(side=LEFT)
 #BUTTON COMBINE: COLOR DETECTION CREATES THE OUTPUT RESULT (NOE'S CODE)
 combineButton = Button(leftFrame, text="AVATAR STATE", font=courierButton,
