@@ -30,38 +30,34 @@ def combine(firstElement, secondElement):
         imgFile = cv2.imread('mud.jpg') #500 x 281
         size = (500, 281)
         cv2.imshow('dst_rt', imgFile)
-    else:
-        cv.DestroyWindow('dst_rt')
+
 
     #Water + Fire == Opposites
-    if ((firstElement == "Water" and secondElement == "Fire") or
+    elif ((firstElement == "Water" and secondElement == "Fire") or
              (firstElement == "Fire" and secondElement == "Water")):
         print "Water + Fire == Opposites!"
         imgFile = cv2.imread('waterFire.png') #500 x 281
         size = (500, 281)
         cv2.imshow('dst_rt', imgFile)
-    else:
-        cv.DestroyWindow('dst_rt')
+
     #Water + Air == Ice, Frost
-    if ((firstElement == "Water" and secondElement == "Air") or
+    elif ((firstElement == "Water" and secondElement == "Air") or
              (firstElement == "Air" and secondElement == "Water")):
         print "Water + Air == Ice, Frost!"
         imgFile = cv2.imread('ice.jpg') #500 x 281
         size = (500, 281)
         cv2.imshow('dst_rt', imgFile)
-    else:
-        cv.DestroyWindow('dst_rt')
+
     #Earth + Fire == Lava, Magma
-    if ((firstElement == "Earth" and secondElement == "Fire") or
+    elif ((firstElement == "Earth" and secondElement == "Fire") or
              (firstElement == "Fire" and secondElement == "Earth")):
         print "Earth + Fire == Lava, Magma!"
         imgFile = cv2.imread('lava.jpg') #500 x 281
         size = (500, 281)
         cv2.imshow('dst_rt', imgFile)
-    else:
-        cv.DestroyWindow('dst_rt')
+
     #Earth + Air == Opposites
-    if ((firstElement == "Earth" and secondElement == "Air") or
+    elif ((firstElement == "Earth" and secondElement == "Air") or
              (firstElement == "Air" and secondElement == "Earth")):
         print "Earth + Air == Opposites!"
         imgFile1 = resizePhoto(500, 'earthAir.jpg')
@@ -70,10 +66,9 @@ def combine(firstElement, secondElement):
         cv2.imshow('dst_rt', imgFile)
         cv2.waitKey(0)
 
-    else:
-        cv.DestroyWindow('dst_rt')
+
     #Fire + Air == Lightning, Electricity
-    if ((firstElement == "Air" and secondElement == "Fire") or
+    elif ((firstElement == "Air" and secondElement == "Fire") or
              (firstElement == "Fire" and secondElement == "Air")):
         print "Air + Fire == Lightning, Electricity!"
         imgFile = cv2.imread('lightning.jpg') #500 x 281
