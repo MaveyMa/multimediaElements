@@ -81,8 +81,8 @@ def combine(firstElement, secondElement):
 
         cv2.imshow('dst_rt', imgFile)
         print "Air + Fire == Lightning, Electricity!"
-    else:
-        cv.DestroyWindow('dst_rt')
+    #else:
+        #cv.DestroyWindow('dst_rt')
     #None of the above.
 
 
