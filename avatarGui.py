@@ -41,7 +41,7 @@ def combineColorsAvatarState():
 '''
 
 def bendElementsButton():
-    import glut.py
+    import glut
     INVERSE_MATRIX = np.array([[ 1.0, 1.0, 1.0, 1.0],
                                 [-1.0,-1.0,-1.0,-1.0],
                                 [-1.0,-1.0,-1.0,-1.0],

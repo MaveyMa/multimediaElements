@@ -21,49 +21,49 @@ from glyphfunctions import *
 import cv2
 #Main program to work
 def get_vectors(image, points):
-     
+
     # order points
     points = order_points(points)
- 
+
     # load calibration data
     with np.load('webcam_calibration_ouput.npz') as X:
         mtx, dist, _, _ = [X[i] for i in ('mtx','dist','rvecs','tvecs')]
-   
+
     # set up criteria, image, points and axis
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
- 
+
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
- 
+
     imgp = np.array(points, dtype="float32")
- 
+
     objp = np.array([[0.,0.,0.],[1.,0.,0.],
-                        [1.,1.,0.],[0.,1.,0.]], dtype="float32")  
- 
+                        [1.,1.,0.],[0.,1.,0.]], dtype="float32")
+
     # calculate rotation and translation vectors
     cv2.cornerSubPix(gray,imgp,(11,11),(-1,-1),criteria)
     rvecs, tvecs, _ = cv2.solvePnPRansac(objp, imgp, mtx, dist)
- 
+
     return rvecs, tvecs
 #==============================================================================
 # glyph table
 
 # match glyph pattern to database record
 def match_glyph_pattern(glyph_pattern):
-    
+
     GLYPH_TABLE = [[[[0, 1, 0, 1, 0, 0, 0, 1, 1],[0, 0, 1, 1, 0, 1, 0, 1, 0],[1, 1, 0, 0, 0, 1, 0, 1, 0],[0, 1, 0, 1, 0, 1, 1, 0, 0]], SHAPE_CONE],[[[1, 0, 0, 0, 1, 0, 1, 0, 1],[0, 0, 1, 0, 1, 0, 1, 0, 1],[1, 0, 1, 0, 1, 0, 0, 0, 1],[1, 0, 1, 0, 1, 0, 1, 0, 0]], SHAPE_SPHERE]]
     glyph_found = False
     glyph_rotation = None
     glyph_name = None
-     
+
     for glyph_record in GLYPH_TABLE:
-        for idx, val in enumerate(glyph_record[0]):    
+        for idx, val in enumerate(glyph_record[0]):
             if glyph_pattern == val:
                 glyph_found = True
                 glyph_rotation = idx
                 glyph_name = glyph_record[1]
                 break
         if glyph_found: break
- 
+
     return (glyph_found, glyph_rotation, glyph_name)
 
 #==============================================================================
@@ -84,7 +84,7 @@ def detect_glyphs(frame):
     contours = contours[:3]
 
     for contour in contours:
-        # stage Shape 
+        # stage Shape
         perimeter = cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, 0.01*perimeter, True)
 
@@ -106,12 +106,12 @@ def detect_glyphs(frame):
                 # Stage 7: Get rotation and translation vectors
                 rvecs, tvecs = get_vectors(frame, approx.reshape(4, 2))
                 glyphs.append([rvecs, tvecs, glyph_name])
-                
+
                 if glyph_found:
                     # Stage 7: Get rotation and translation vectors
                     rvecs, tvecs = get_vectors(frame, approx.reshape(4, 2))
                     glyphs.append([rvecs, tvecs, glyph_name])
- 
+
     return glyphs
 #==============================================================================
 def position_glyphs(frame):
@@ -119,7 +119,7 @@ def position_glyphs(frame):
     glyphs = detect_glyphs(frame)
 
     for glyph in glyphs:
-         
+
         rvecs, tvecs, glyph_name = glyph
 
         # build view matrix
@@ -138,24 +138,24 @@ def position_glyphs(frame):
         glPushMatrix()
         glLoadMatrixd(view_matrix)
 
-        
+
         glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 50, -50, 0.0))
         glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 1.0, 1.0))
         glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 1.0, 2.0, 1.0))
-        
+
 
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
         if glyph_name == SHAPE_CONE:
             glCallList(cone.gl_list)
-            
+
         elif glyph_name == SHAPE_SPHERE:
             glCallList(sphere.gl_list)
 
         glDisable(GL_LIGHT0)
         glDisable(GL_LIGHTING)
         glPopMatrix()
-    
+
 
 #==============================================================================
 def _draw_background():
@@ -183,9 +183,9 @@ def display():
 
     frame, rgb = get_frame()
     rgb = cv2.flip(rgb, 0)
-    
+
     bg_image = cv2.flip(frame, 0)
-    bg_image = Image.fromarray(bg_image)     
+    bg_image = Image.fromarray(bg_image)
     ix = bg_image.size[0]
     iy = bg_image.size[1]
     gl_img = pygame.image.frombuffer(rgb.tostring(), rgb.shape[1::-1], "RGBA")
@@ -195,7 +195,7 @@ def display():
     glColor(1.0,1.0,1.0,1)
     glBindTexture(GL_TEXTURE_2D, texture_background)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)    
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, bg_image)
     #glClearColor(0.0, 0.0, 0.0, 0.0)
     # draw background
@@ -221,7 +221,7 @@ def _init_gl(Width, Height):
     glLoadIdentity()
     gluPerspective(33.7, 1.3, 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
-     
+
 
     # assign texture
     glEnable(GL_TEXTURE_2D)
@@ -238,7 +238,7 @@ def get_frame():
 
     cv2.imshow('frame',frame)
 
-    
+
 
     return frame, rgb
 
@@ -273,10 +273,10 @@ window_id = glutCreateWindow("OpenGL Glyphs")
 # assign texture
 #glEnable(GL_TEXTURE_2D)
 
- 
+
 # assign shapes
-cone = OBJ('plainRain.obj')
-sphere = OBJ('exportedRock.obj')
+cone = OBJ('test2.obj')
+sphere = OBJ('test2.obj')
 
 # Run the GLUT main loop until the user closes the window.
 #glutMainLoop()
