@@ -49,8 +49,11 @@ def get_vectors(image, points):
 
 # match glyph pattern to database record
 def match_glyph_pattern(glyph_pattern):
-    
-    GLYPH_TABLE = [[[[0, 1, 0, 1, 0, 0, 0, 1, 1],[0, 0, 1, 1, 0, 1, 0, 1, 0],[1, 1, 0, 0, 0, 1, 0, 1, 0],[0, 1, 0, 1, 0, 1, 1, 0, 0]], SHAPE_CONE],[[[1, 0, 0, 0, 1, 0, 1, 0, 1],[0, 0, 1, 0, 1, 0, 1, 0, 1],[1, 0, 1, 0, 1, 0, 0, 0, 1],[1, 0, 1, 0, 1, 0, 1, 0, 0]], SHAPE_SPHERE]]
+    # glyphs patter are recorded here
+    GLYPH_TABLE = [[[[0, 1, 0, 1, 0, 0, 0, 1, 1],[0, 0, 1, 1, 0, 1, 0, 1, 0],[1, 1, 0, 0, 0, 1, 0, 1, 0],[0, 1, 0, 1, 0, 1, 1, 0, 0]], SHAPE_CONE],
+                   [[[1, 0, 0, 0, 1, 0, 1, 0, 1],[0, 0, 1, 0, 1, 0, 1, 0, 1],[1, 0, 1, 0, 1, 0, 0, 0, 1],[1, 0, 1, 0, 1, 0, 1, 0, 0]], SHAPE_SPHERE],
+                   [[[1, 0, 0, 0, 0, 1, 1, 1, 0],[0, 1, 0, 0, 0, 1, 1, 0, 1],[1, 0, 0, 0, 1, 1, 1, 1, 0],[1, 0, 1, 1, 0, 0, 0, 1, 0]], SHAPE_SMILE],
+                   [[[0, 0, 1, 1, 0, 0, 1, 1, 0],[1, 1, 0, 1, 0, 0, 0, 0, 1],[0, 1, 1, 0, 0, 1, 1, 0, 0],[1, 0, 0, 0, 0, 1, 0, 1, 1]], SHAPE_L]]
     glyph_found = False
     glyph_rotation = None
     glyph_name = None
@@ -139,19 +142,25 @@ def position_glyphs(frame):
         glLoadMatrixd(view_matrix)
 
         
-        glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 50, -50, 0.0))
+        glLightfv(GL_LIGHT0, GL_POSITION,  (-40, 10, -50, 1.0))
         glLightfv(GL_LIGHT0, GL_AMBIENT, (0.2, 0.2, 1.0, 1.0))
         glLightfv(GL_LIGHT0, GL_DIFFUSE, (0.5, 1.0, 2.0, 1.0))
-        
-
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
+
+        #Displays the 3d model whenever the correct pattern is shown
         if glyph_name == SHAPE_CONE:
             glCallList(cone.gl_list)
             
-        elif glyph_name == SHAPE_SPHERE:
+        if glyph_name == SHAPE_SPHERE:
             glCallList(sphere.gl_list)
+            
+        if glyph_name == SHAPE_SMILE:
+            glCallList(smile.gl_list)
 
+        if glyph_name == SHAPE_L:
+            glCallList(drop.gl_list)
+            
         glDisable(GL_LIGHT0)
         glDisable(GL_LIGHTING)
         glPopMatrix()
@@ -177,27 +186,28 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 
-    # ... render stuff in here ...
+
     # It will go to an off-screen frame buffer.
     glLoadIdentity()
 
     frame, rgb = get_frame()
     rgb = cv2.flip(rgb, 0)
-    
+
+    # Were converting the pixels of the camera into something opengl can read
     bg_image = cv2.flip(frame, 0)
     bg_image = Image.fromarray(bg_image)     
     ix = bg_image.size[0]
     iy = bg_image.size[1]
     gl_img = pygame.image.frombuffer(rgb.tostring(), rgb.shape[1::-1], "RGBA")
-    #texture_surface = pygame.image.load(texture_data).convert_alpha()
     bg_image = pygame.image.tostring(gl_img, "RGBA", True)
+    
     # setting background color to show
     glColor(1.0,1.0,1.0,1)
     glBindTexture(GL_TEXTURE_2D, texture_background)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)    
     glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, bg_image)
-    #glClearColor(0.0, 0.0, 0.0, 0.0)
+
     # draw background
     glBindTexture(GL_TEXTURE_2D, texture_background)
     glPushMatrix()
@@ -205,17 +215,20 @@ def display():
     _draw_background()
     glPopMatrix()
 
+    #tracking the movement of the picture on the frame
     image = position_glyphs(frame)
+    
     # Copy the off-screen buffer to the screen.
     glutSwapBuffers()
 
 #==============================================================================
 def _init_gl(Width, Height):
+    #setting up the window for opengl
     glClearColor(0.0, 0.0, 0.0, 0.0)
     glClearDepth(1.0)
     glDepthFunc(GL_LESS)
     glEnable(GL_DEPTH_TEST)
-    glEnable(GL_COLOR_MATERIAL)#
+    glEnable(GL_COLOR_MATERIAL)
     glShadeModel(GL_SMOOTH)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
@@ -223,7 +236,7 @@ def _init_gl(Width, Height):
     glMatrixMode(GL_MODELVIEW)
      
 
-    # assign texture
+    # assign texture to the background for opengl
     glEnable(GL_TEXTURE_2D)
     texture_background = glGenTextures(1)
 
@@ -252,6 +265,8 @@ INVERSE_MATRIX = np.array([[ 1.0, 1.0, 1.0, 1.0],
 
 SHAPE_CONE = "cone"
 SHAPE_SPHERE = "sphere"
+SHAPE_SMILE = "rock"
+SHAPE_L = "drop"
 
 
 width = 640
@@ -262,7 +277,7 @@ glutInit(sys.argv)
 
 # Create a double-buffer RGBA window.   (Single-buffering is possible.
 # So is creating an index-mode window.)
-glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | OPENGL | DOUBLEBUF)
+glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 
 glutInitWindowSize(width, height)
 glutInitWindowPosition(800, 400)
@@ -271,12 +286,14 @@ glutInitWindowPosition(800, 400)
 window_id = glutCreateWindow("OpenGL Glyphs")
 
 # assign texture
-#glEnable(GL_TEXTURE_2D)
+glEnable(GL_TEXTURE_2D)
 
  
 # assign shapes
 cone = OBJ('plainRain.obj')
 sphere = OBJ('exportedRock.obj')
+smile = OBJ('test2.obj')
+drop = OBJ('rockFlipped.obj')
 
 # Run the GLUT main loop until the user closes the window.
 #glutMainLoop()
@@ -288,5 +305,6 @@ glutIdleFunc(display)
 _init_gl(width, height)
 glutMainLoop()
 
+# Releases the camera being used and closes all the windows that used the camera.
 cap.release()
 cv2.destroyAllWindows()
