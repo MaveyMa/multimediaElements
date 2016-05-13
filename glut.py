@@ -1,9 +1,19 @@
 '''
 Credit to https://rdmilligan.wordpress.com for helping us create and understand AR in python.
 Also for the web calibration package
+
+So far it works on windows computers. Mac computers might have issues with opengl.
+
+What you need to run this program
+
+opencv - version 2.4.12
+opengl
+pygame
+Pillow
+numpy
+
+objloader and glyphfunctions are file that need to be in the same location of this file(glut.py).
 '''
-
-
 
 import sys, pygame
 from pygame.locals import *
