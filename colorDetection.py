@@ -195,27 +195,25 @@ while True:
     else:
         elementE = ""
 
-    if(elementE == "Earth"):
-        element1 = elementE
-    elif(elementA == "Air"):
-        element1 = elementA
-    elif(elementF == "Fire"):
-        element1 = elementF
-    elif(elementW == "Water"):
-        element1 = elementW
+    if(elementE == "Earth" and elementF == "Fire"):
+        combine(elementE, elementF)
+    elif(elementA == "Air" and elementW == "Water"):
+        combine(elementA, elementW)
+    elif(elementF == "Fire" and elementW == "Water"):
+        combine(elementF, elementW)
+    elif(elementW == "Water" and elementE == "Earth"):
+        combine(elementW, elementE)
+    elif(elementA == "Air" and elementE == "Earth"):
+        combine(elementA, elementE)
+    elif(elementA == "Air" and elementF == "Fire"):
+        combine(elementW, elementE)
 
-    if(elementE == "Earth"):
-        element2 = elementE
-    elif(elementA == "Air"):
-        element2 = elementA
-    elif(elementF == "Fire"):
-        element2 = elementF
-    elif(elementW == "Water"):
-        element2 = elementW
+
+
+
+    #combine("Fire", "Air")
 
     combine(element1, element2)
-    print "element1 is " + element1
-    print "element2 is " + element2
 
 
 
@@ -235,5 +233,5 @@ while True:
         cv.Zero(imgScribble)
 
 
-capture.release()
-cv2.destroyAllWindows()
+#capture.release()
+#cv2.destroyAllWindows()
